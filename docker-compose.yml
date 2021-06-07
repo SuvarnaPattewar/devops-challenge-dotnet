@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  devopschallenge.salesapi:
+    image: ${DOCKER_REGISTRY-}devopschallengesalesapi
+    build:
+      context: .
+      dockerfile: src/DevOpsChallenge.SalesApi/Dockerfile
+
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+  
+
+

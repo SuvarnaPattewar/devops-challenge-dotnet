@@ -1,0 +1,24 @@
+services:
+  devopschallenge.salesapi:
+    build:
+      context: C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet
+      dockerfile: src/DevOpsChallenge.SalesApi/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: devopschallengesalesapi
+    ports:
+    - target: 80
+    - target: 443
+    volumes:
+    - C:\Users\suvarnaadmin\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\suvarnaadmin\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+  ms-sql-server:
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    ports:
+    - published: 1433
+      target: 1433
+version: '3.4'

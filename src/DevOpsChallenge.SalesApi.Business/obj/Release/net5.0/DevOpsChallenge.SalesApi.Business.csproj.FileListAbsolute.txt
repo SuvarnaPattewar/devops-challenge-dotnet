@@ -1,0 +1,15 @@
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\bin\Release\net5.0\DevOpsChallenge.SalesApi.Business.deps.json
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\bin\Release\net5.0\DevOpsChallenge.SalesApi.Business.dll
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\bin\Release\net5.0\ref\DevOpsChallenge.SalesApi.Business.dll
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\bin\Release\net5.0\DevOpsChallenge.SalesApi.Business.pdb
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\bin\Release\net5.0\DevOpsChallenge.SalesApi.Database.dll
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\bin\Release\net5.0\DevOpsChallenge.SalesApi.Database.pdb
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.csproj.AssemblyReference.cache
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.AssemblyInfoInputs.cache
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.AssemblyInfo.cs
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.csproj.CoreCompileInputs.cache
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.csproj.CopyComplete
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.dll
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\ref\DevOpsChallenge.SalesApi.Business.dll
+C:\Users\suvarnaadmin\source\repos\devops-challenge-dotnet\src\DevOpsChallenge.SalesApi.Business\obj\Release\net5.0\DevOpsChallenge.SalesApi.Business.pdb

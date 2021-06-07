@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\suvarnaadmin\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\suvarnaadmin\\.nuget\\packages"
+    ]
+  }
+}
