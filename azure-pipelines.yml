@@ -12,30 +12,135 @@ pool:
 variables:
   buildConfiguration: 'Release'
   location:'West US 2'
-  dokCrHostName:'dotnetchallenge'
-  dokName:'devOpsChallengedr'
+  acrHostName:'dotnetchallenge.azurecr.io'
+  acrName:'devOpsChallengedr'
   rgName:'suvarna_rg'
   imageName:'devOps-Challenge-dotnet'
-  webAppName:'devOpsChallenge'
+  webAppName:
+  -'devOpsChallenge'
+
+stages:
+
+#Build stage
+-stage:BuildAndTest
+
+ jobs:
+
+- job:BuildAndTest
+  pool:
+    vmImage:ubuntu-latest
   
-steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-- task: UseDotNet@2
-  inputs:
-    version: '5.0.x'
-    includePreviewVersions: true
-- task: UseDotNet@2
-  inputs:
-    version: '3.0.x'
-    packageType: runtime
-- task: UseDotNet@2
-  displayName: 'install .NET Core SDK'
-  inputs:
-    version: '5.0.x'
-    performMultiLevelLookup: true
-    includePreviewVersions: true
-    
+#Create or update the Azure container registry resource  
+
+-task:AzureResourceGroupDeployment@2
+  displayName:'Azure Deployment:Create Azure Container Registry'
+ inputs:
+   azureSubscription:'AzureSc'
+   resourceGroupName: '$(rgName)'
+   location: $(location)
+   csmFile: '$(System.DefaultWorkingDirectory)/**/containerRegistry-template.json'
+   overrideParameters:'-registryName "$(acrName)" -registrylocation "$(location)" -registrySku standard'
+
+#Restore Dependencies
+-task:DotNetCoreCLI@2
+ displayName:'dotnet restore'
+   inputs:
+    command:restore
+    projects:'**/*.csproj'
+
+#Build app
+-task:DotNetCoreCLI@2
+ displayName:'dotnet build'
+   inputs:
+    command:build
+    projects:'**/*.csproj'
+    arguments:'-configuration ${buildConfiguration}'
+
+# Run Unit Tests
+-task:DotNetCoreCLI@2
+ displayName:test
+   inputs:
+     command:test
+     projects:'**/*UnitTests/*.csproj'
+     arguments:'-configuration ${buildConfiguration}'
+
+#Publish the app
+-task: DotNetCoreCLI@2
+ displayName: 'dotnet publish'
+ inputs:
+   Command: Publish
+   publishWebProjects:True
+   arguments:'--configuration $(BuildConfiguration) --output $(System.DefaultWorkingDirectory)/PublishedWebApp'
+   zipAfterPublish: false
+
+#Build container Image
+-task: Docker@1
+ displayName: 'Build container image'   
+ inputs:
+   azureSubscriptionEndPoint:'AzureSc'
+   azureContainerRegistry:'$(acrHostName)'
+   imageName: '$(imageName):$(Build.BuildId)'
+   useDefaultContext:false
+   buildContext: '$(System.DefaultWorkingDirectory)/PublishedWebApp'
+
+#Push container image
+-task: Docker@1
+ displayName: 'Push container image'   
+ inputs:
+   azureSubscriptionEndPoint:'AzureSc'
+   azureContainerRegistry:'$(acrHostName)'
+   command: 'Push an image'
+   imageName: '$(imageName):$(Build.BuildId)'
+
+#Copy ARM Templates
+ -task: CopyFiles@2
+ displayName:  'Copy ARM templates' 
+ inputs:
+  SourceFolder:ArmTemplates
+  TargetFolder:'$(build.artifactstagingdirectory)'
+
+#publish the app as an artifact
+ -publish: $(buildStagingDirectory)  
+ artifact:app
+
+#Staging Release
+-stage:Staging
+jobs:
+- job: Release
+  pool:    
+     vmImage: ubuntu-latest
+  steps:
+  -checkout:none  
+
+#Download published application artifact
+-download: current
+artifact: app
+
+#Create or update Azure App Service
+-task:AzureResourceGrupDeployment@2
+ displayName: 'Azure Deployment:Create Azure App Service'
+ inputs:
+   azureSubscription:'AzureSc'
+   resourceGroupName: '$(rgName)'
+   location:'$(location)'
+   csmFile:'$(Pipeline.Workspace)/**/container-webapp-template.json'
+   overrideParameters:'-webAppName $(WebAppName) -hostingPlaneName $(WebAppName) appInsightsLocation "$(location)"'
+
+#Deploy App Service
+-task:AzureRmWebAppDeployment@3
+  displayName:'Deploy Azure App Service'
+    inputs:
+      azuresubscription:'AzureSc'
+      appType: applinux
+      webAppName: $(WebAppName)
+      DockerNameSpace:$(acrHostName)
+      DockerRepository:$(webAppName)
+      DockerImageTag:'$(Build.BuildId)'
+      WebAppUri: webAppUrl
+      TakeAppOfflineFlag: true
+      UseWebDeploy: true
+      RenameFilesFlag: true
+  
     
 
 
