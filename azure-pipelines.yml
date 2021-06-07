@@ -11,7 +11,34 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-
+  location:'West US 2'
+  dokCrHostName:'dotnetchallenge'
+  dokName:'devOpsChallengedr'
+  rgName:'suvarna_rg'
+  imageName:'devOps-Challenge-dotnet'
+  webAppName:'devOpsChallenge'
+  
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+- task: UseDotNet@2
+  inputs:
+    version: '5.0.x'
+    includePreviewVersions: true
+- task: UseDotNet@2
+  inputs:
+    version: '3.0.x'
+    packageType: runtime
+- task: UseDotNet@2
+  displayName: 'install .NET Core SDK'
+  inputs:
+    version: '5.0.x'
+    performMultiLevelLookup: true
+    includePreviewVersions: true
+    
+    
+
+
+
+
+  
